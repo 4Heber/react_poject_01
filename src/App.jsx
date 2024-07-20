@@ -8,10 +8,31 @@ function App() {
 
   //State
   const [data, setData] = useState([])
+  const [cart, setCart] = useState([])
 
   useEffect(() => {
     setData(db)
   }, [])
+
+  /**
+   * Función para añadir items al carrito controlando duplicados y cantidad 
+   * Utiliza setCart
+   * @Guitar Componente guitarra como ítem
+   */
+  function addToCart(item){
+
+    /** findIndex retorna el indice del elemento si lo encuentra o -1 si no lo encuentra */
+    const itemExists = cart.findIndex((guitar) => guitar.id === item.id)
+    if(itemExists >= 0){
+      // Si el item ya existe, aumentar su quantity sin modificar state directamente creando copia del actual
+      const updatedCart = [...cart]
+      updatedCart[itemExists].quantity++
+      setCart(updatedCart)
+    } else {
+      item.quantity = 1
+      setCart(() => [...cart, item])
+    }
+  }
 
   return (
     <>
@@ -25,6 +46,9 @@ function App() {
             <Guitar
               key={guitar.id}
               guitar={guitar}
+              /** Se pasa la función como prop, el state cart se inluye por defecto */
+              // setCart={setCart}
+              addToCart={addToCart}
             />
           ))}
         </div>

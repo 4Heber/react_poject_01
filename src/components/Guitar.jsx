@@ -1,11 +1,15 @@
-export default function Guitar({guitar}){
+export default function Guitar({guitar, setCart, addToCart}){
 
     const {id, name, image, description, price} = guitar
+
+    // function handleClick(guitar){
+    //     console.log(guitar);
+    // }
 
     return(
         <div className="col-md-6 col-lg-4 my-4 row align-items-center">
                 <div className="col-4">
-                    <img className="img-fluid" src={`./img/'+${image}+'.jpg`} alt="imagen guitarra" />
+                    <img className="img-fluid" src={`./img/${image}.jpg`} alt="imagen guitarra" />
                 </div>
                 <div className="col-8">
                     <h3 className="text-black fs-4 fw-bold text-uppercase">{name}</h3>
@@ -14,6 +18,17 @@ export default function Guitar({guitar}){
                     <button 
                         type="button"
                         className="btn btn-dark w-100"
+                        /** Call function in callback */
+                        // onClick={() => handleClick(guitar)}
+
+                        /** 
+                         * setCart tiene acceso al state previo, por convención de nombre con prefijo prev
+                         * spread operator para copiar todos lo elementos del state previo y añadir el elemento nuevo
+                         * */
+                        // onClick={() => setCart((prevCart) => [...prevCart, guitar])}
+
+                        /** Logica de función definida en componente padre App */
+                        onClick={() => addToCart(guitar)}
                     >Agregar al Carrito</button>
                 </div>
             </div>
