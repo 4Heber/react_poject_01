@@ -10,6 +10,10 @@ function App() {
   const [data, setData] = useState([])
   const [cart, setCart] = useState([])
 
+  // Número mínimo y máximo del mismo elemento en el carrito
+  const MAX_ITEMS = 5
+  const MIN_ITEMS = 1
+
   useEffect(() => {
     setData(db)
   }, [])
@@ -24,6 +28,7 @@ function App() {
     /** findIndex retorna el indice del elemento si lo encuentra o -1 si no lo encuentra */
     const itemExists = cart.findIndex((guitar) => guitar.id === item.id)
     if(itemExists >= 0){
+      if(cart[itemExists].quantity >= MAX_ITEMS) return
       // Si el item ya existe, aumentar su quantity sin modificar state directamente creando copia del actual
       const updatedCart = [...cart]
       updatedCart[itemExists].quantity++
@@ -42,11 +47,47 @@ function App() {
     setCart((prevCart) => prevCart.filter(guitar => guitar.id !== id))
   }
 
+  /**
+   * Función para incrementar la cantidad de items del carrito.
+   * Utiliza .map() para retornar el state modificado
+   */
+  function incrementItemCart(id){
+    const updatedCart = cart.map((guitar)=>{
+      if(guitar.id === id && guitar.quantity < MAX_ITEMS){
+        return {
+          ...guitar,
+          quantity: guitar.quantity + 1
+        }
+      }
+      return guitar
+    })
+    setCart(updatedCart)
+  }
+
+  /**
+   * Función para decrementar cantidades de un elemento en el carrito.
+   * 
+   */
+  function decreaseItemCart(id){
+    const updatedCart = cart.map((guitar) => {
+      if(guitar.id === id && guitar.quantity > MIN_ITEMS){
+        return {
+          ...guitar,
+          quantity: guitar.quantity - 1
+        }
+      }
+      return guitar
+    })
+    setCart(updatedCart)
+  }
+
   return (
     <>
     <Header
       cart={cart}
       removeFromCart={removeFromCart}
+      incrementItemCart={incrementItemCart}
+      decreaseItemCart={decreaseItemCart}
     />
 
     <main className="container-xl mt-5">

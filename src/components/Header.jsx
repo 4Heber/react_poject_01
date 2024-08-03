@@ -1,6 +1,6 @@
 import {useMemo} from 'react'
 
-export default function Header({ cart, removeFromCart }){
+export default function Header({ cart, removeFromCart, incrementItemCart, decreaseItemCart }){
 
     // State Derivado isEmpty - Función que depende del state principal de cart para evitar usar lógica dentro del template
     // Hook useMemo(Factory:lógica a ejecutar, deps:array de dependencias) mejora el performance al renderizar solo si hay cambios en deps
@@ -57,6 +57,7 @@ export default function Header({ cart, removeFromCart }){
                                                     <button
                                                         type="button"
                                                         className="btn btn-dark"
+                                                        onClick={()=>decreaseItemCart(guitar.id)}
                                                     >
                                                         -
                                                     </button>
@@ -64,6 +65,7 @@ export default function Header({ cart, removeFromCart }){
                                                     <button
                                                         type="button"
                                                         className="btn btn-dark"
+                                                        onClick={() => incrementItemCart(guitar.id)}
                                                     >
                                                         +
                                                     </button>
