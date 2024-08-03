@@ -66,7 +66,7 @@ function App() {
 
   /**
    * Función para decrementar cantidades de un elemento en el carrito.
-   * 
+   * Utiliza .map() para retornar el state modificado
    */
   function decreaseItemCart(id){
     const updatedCart = cart.map((guitar) => {
@@ -81,6 +81,13 @@ function App() {
     setCart(updatedCart)
   }
 
+  /**
+   * Función para vaciar el carrito.
+   */
+  function clearCart(){
+    setCart([])
+  }
+
   return (
     <>
     <Header
@@ -88,6 +95,7 @@ function App() {
       removeFromCart={removeFromCart}
       incrementItemCart={incrementItemCart}
       decreaseItemCart={decreaseItemCart}
+      clearCart={clearCart}
     />
 
     <main className="container-xl mt-5">
