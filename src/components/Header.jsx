@@ -6,7 +6,7 @@ export default function Header({ cart, removeFromCart, incrementItemCart, decrea
     // Hook useMemo(Factory:lógica a ejecutar, deps:array de dependencias) mejora el performance al renderizar solo si hay cambios en deps
     const isEmpty = useMemo( () => cart.length === 0, [cart])
     // .reduce( (total, item) => {}, initialValue)
-    const cartTotal = useMemo( () => cart.reduce((total, item) => total + (item.quantity * item.price), 0), [cart])
+    const cartTotal = () => cart.reduce((total, item) => total + (item.quantity * item.price), 0)
 
     return(
         <header className="py-5 header">
@@ -83,7 +83,7 @@ export default function Header({ cart, removeFromCart, incrementItemCart, decrea
                                         ))}
                                     </tbody>
                                 </table>
-                                <p className="text-end">Total pagar: <span className="fw-bold">${cartTotal}</span></p>
+                                <p className="text-end">Total pagar: <span className="fw-bold">${cartTotal()}</span></p>
                             </>
                         )}
                             <button

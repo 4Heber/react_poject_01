@@ -9,12 +9,12 @@ function App() {
   // Comprobar si hay datos en localStorage para definir el state inicial del carrito
   const initialCart = () => {
     const localStorageCart = localStorage.getItem('cart')
-    localStorageCart ? JSON.parse(localStorageCart) : []
+    return localStorageCart ? JSON.parse(localStorageCart) : []
   }
 
   //State
   const [data, setData] = useState([])
-  const [cart, setCart] = useState([initialCart])
+  const [cart, setCart] = useState(initialCart)
 
   // Número mínimo y máximo del mismo elemento en el carrito
   const MAX_ITEMS = 5
