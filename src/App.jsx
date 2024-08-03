@@ -6,13 +6,28 @@ import { db } from './data/db'
 
 function App() {
 
+  // Comprobar si hay datos en localStorage para definir el state inicial del carrito
+  const initialCart = () => {
+    const localStorageCart = localStorage.getItem('cart')
+    localStorageCart ? JSON.parse(localStorageCart) : []
+  }
+
   //State
   const [data, setData] = useState([])
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState([initialCart])
 
   // Número mínimo y máximo del mismo elemento en el carrito
   const MAX_ITEMS = 5
   const MIN_ITEMS = 1
+
+  /**
+   * Almacenar información del carrito en LocalStorage
+   * Como el state es asíncrono, de utiliza useEffect
+   * Actualiza el localStorage cuando detecta cambios en cart
+   */
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart))
+  }, [cart])
 
   useEffect(() => {
     setData(db)
