@@ -1,12 +1,4 @@
-import {useMemo} from 'react'
-
-export default function Header({ cart, removeFromCart, incrementItemCart, decreaseItemCart, clearCart }){
-
-    // State Derivado isEmpty - Función que depende del state principal de cart para evitar usar lógica dentro del template
-    // Hook useMemo(Factory:lógica a ejecutar, deps:array de dependencias) mejora el performance al renderizar solo si hay cambios en deps
-    const isEmpty = useMemo( () => cart.length === 0, [cart])
-    // .reduce( (total, item) => {}, initialValue)
-    const cartTotal = () => cart.reduce((total, item) => total + (item.quantity * item.price), 0)
+export default function Header({ cart, removeFromCart, incrementItemCart, decreaseItemCart, clearCart, isEmpty, cartTotal }){
 
     return(
         <header className="py-5 header">
